@@ -1,23 +1,12 @@
-import { Link } from 'react-router-dom';
+import './MainLayout.scss';
 
-export default function MainLayout({children}) {
+export default function MainLayout({ children }) {
   return (
     <div className="main-layout">
       <header className="main-layout__header">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/transactions">Transactions</Link>
-            </li>
-            <li>
-              <Link to="/transfer">Transfer</Link>
-            </li>
-          </ul>
-        </nav>
+        <h1>Account</h1>
       </header>
-      <section className="main-layout__content">
-        { children }
-      </section>
+      <section className="main-layout__content">{children}</section>
     </div>
   );
 }

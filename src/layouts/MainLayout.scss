@@ -1,0 +1,19 @@
+@import '../styles/variables.scss';
+
+.main-layout {
+  &__header {
+    display: flex;
+    justify-content: center;
+    background-color: $primary-color;
+    color: $primary-color-text;
+    height: 70px;
+
+    h1 {
+      align-self: center;
+      margin: 0;
+      padding: 0.5rem;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+    }
+  }
+}

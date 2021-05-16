@@ -24,10 +24,18 @@ export default function TransactionList({transactions}) {
 // TODO write unit tests and move to utils
 // TODO move constants to constants file
 function formatCurrency({currency, amount, action}) {
+  if (!String.isString(currency) || !Number.isNumber(amount)) {
+    return;
+  }
   const sign = action === 'CREDIT' ? '+' : '-';
   return `${sign} ${currency.toUpperCase()} ${amount.toFixed(2)}`;
 }
 
+// TODO write unit tests and move to utils
+// TODO show day of week in format
 function formatDate(timestamp) {
+  if (!timestamp) {
+    return;
+  }
   return new Date(timestamp).toLocaleString();
 }
