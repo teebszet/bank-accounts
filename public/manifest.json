@@ -1,0 +1,9 @@
+{
+  "short_name": "Bank Accounts",
+  "name": "Bank Accounts",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
