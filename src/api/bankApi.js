@@ -7,6 +7,10 @@
  * example reponse: 200 OK
  * body: [ '02001', '02002' ]
  *
+ * GET /currencies
+ * example reponse: 200 OK
+ * body: [ 'HKD', 'NZD' ]
+ *
  * GET /:accountId/transactions
  * example reponse: 200 OK
  * body: [
@@ -35,19 +39,21 @@
  * example response: 200 OK
  *
  */
+export const DEBIT = 'DEBIT';
+export const CREDIT = 'CREDIT';
 
 const transactions = {
   '02001': [
     {
       "timestamp": "2021-05-16T04:55:17.890Z",
-      "action": "DEBIT",
+      "action": DEBIT,
       "description": "Direct Credit S T Macandrew",
       "amount": 343.00,
       "currency": "HKD"
     },
     {
       "timestamp": "2021-05-12T04:55:17.890Z",
-      "action": "DEBIT",
+      "action": DEBIT,
       "description": "QTWN COOKIE BAR QUEENSTOWN POS",
       "amount": 33.09,
       "currency": "NZD"
@@ -56,14 +62,14 @@ const transactions = {
   '02002': [
     {
       "timestamp": "2021-05-16T04:55:17.890Z",
-      "action": "CREDIT",
+      "action": CREDIT,
       "description": "Direct Credit S T Macandrew 0XX01",
       "amount": 343.00,
       "currency": "HKD"
     },
     {
       "timestamp": "2021-05-12T04:55:17.890Z",
-      "action": "DEBIT",
+      "action": DEBIT,
       "description": "POS W/D MRS FERG MRS 9:20",
       "amount": 16.09,
       "currency": "NZD"
@@ -71,6 +77,7 @@ const transactions = {
   ]
 };
 
+/* TODO replace these implementations with fetch to hit real backend when ready */
 export const listTransactions = async (accountId) => {
   try {
     if (!accountId) {
@@ -79,7 +86,6 @@ export const listTransactions = async (accountId) => {
     if (!transactions[accountId]) {
       throw new Error('account id not found');
     }
-    // TODO replace with fetch to hit real backend when ready
     return Promise.resolve(transactions[accountId]);
   } catch(e) {
     return _handleException(e);
@@ -88,7 +94,6 @@ export const listTransactions = async (accountId) => {
 
 export const listAccounts = async () => {
   try {
-    // TODO replace with fetch to hit real backend when ready
     return Promise.resolve(Object.keys(transactions));
   } catch(e) {
     return _handleException(e);
@@ -97,13 +102,35 @@ export const listAccounts = async () => {
 
 export const listCurrencies = async () => {
   try {
-    // TODO replace with fetch to hit real backend when ready
     return Promise.resolve(['HKD', 'NZD']);
   } catch(e) {
     return _handleException(e);
   }
 };
-  // TODO get this from backend API
+
+export const postTransfer = async ({toAccount, fromAccount, amount, currency}) => {
+  try {
+    // simulating the backend
+    transactions[toAccount].push({
+      amount: Number(amount),
+      currency,
+      action: CREDIT,
+      timestamp: new Date().toString(),
+      description: `Transfer from ${fromAccount}`,
+    });
+
+    transactions[fromAccount].push({
+      amount: Number(amount),
+      currency,
+      action: DEBIT,
+      timestamp: new Date().toString(),
+      description: `Transfer to ${toAccount}`,
+    });
+    return Promise.resolve();
+  } catch(e) {
+    return _handleException(e);
+  }
+};
 
 function _handleException(e) {
   // TODO extend error handling here e.g. use a logger

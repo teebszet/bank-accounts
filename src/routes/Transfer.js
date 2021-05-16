@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import MainLayout from '../layouts/MainLayout';
 import Button from '../components/Button';
-import { listAccounts, listCurrencies } from '../api/bankApi';
+import { listAccounts, listCurrencies, postTransfer } from '../api/bankApi';
 import './Transfer.scss';
 
 export default function Transfer() {
@@ -16,7 +16,10 @@ export default function Transfer() {
   const [accounts, setAccounts] = useState([]);
   const [currencies, setCurrencies] = useState([]);
   const watchFromAccount = watch('fromAccount');
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    await postTransfer(data);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,9 +82,13 @@ export default function Transfer() {
             <div className="amount">
               <input
                 type="number"
-                {...register('amount', {required: true})}
+                {...register('amount', { required: true })}
               ></input>
-              { errors.amount ? (<span className="error">Amount is required</span>) : '' }
+              {errors.amount ? (
+                <span className="error">Amount is required</span>
+              ) : (
+                ''
+              )}
             </div>
           </div>
           <div className="transfer-button">
