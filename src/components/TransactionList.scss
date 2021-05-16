@@ -1,0 +1,22 @@
+h1 {
+  padding: 0 1rem;
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+}
+
+.transaction-item {
+  padding: 1rem;
+  
+  h4 {
+    margin: 0 0 0.5rem 0
+  }
+  div {
+    margin-bottom: 0.5rem;
+  }
+  .timestamp {
+    font-weight: lighter;
+  }
+}
