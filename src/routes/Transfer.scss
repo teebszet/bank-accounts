@@ -1,0 +1,33 @@
+.transfer {
+  &__form {
+    width: 100%;
+    max-width: 500px;
+
+    > div {
+      margin: 2rem 0.5rem;
+    }
+
+    select, input {
+      font-size: 1rem;
+      padding: 1rem;
+      border-radius: 2px;
+      border: black 1px solid;
+      background-color: unset;
+      overflow: hidden;
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+
+  .currency-amount-row, .transfer-button {
+    display: flex;
+    justify-content: flex-end;
+
+    select {
+      width: auto;
+      margin: 0 0.5rem;
+    }
+  }
+}
