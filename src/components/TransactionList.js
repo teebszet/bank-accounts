@@ -24,7 +24,7 @@ export default function TransactionList({transactions}) {
 // TODO write unit tests and move to utils
 // TODO move constants to constants file
 function formatCurrency({currency, amount, action}) {
-  if (!String.isString(currency) || !Number.isNumber(amount)) {
+  if (!currency || !Number.isFinite(amount)) {
     return;
   }
   const sign = action === 'CREDIT' ? '+' : '-';
