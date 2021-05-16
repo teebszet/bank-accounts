@@ -19,6 +19,9 @@
     }
   }
   &__content {
+    max-width: 500px;
+    margin: 0 auto;
+
     min-height: calc(100vh - 4.5rem);
     padding-top: 2rem;
   }

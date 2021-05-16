@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Transactions from './routes/Transactions';
 import Transfer from './routes/Transfer';
+import './App.scss';
 
 export default function App() {
   return (

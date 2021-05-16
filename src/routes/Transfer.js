@@ -17,7 +17,7 @@ export default function Transfer() {
   const [currencies, setCurrencies] = useState([]);
   const watchFromAccount = watch('fromAccount');
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     await postTransfer(data);
   };
 

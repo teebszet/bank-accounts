@@ -8,7 +8,7 @@ import './Transactions.scss'
 
 export default function Transactions() {
   const [accountIds, setAccountIds] = useState([]);
-  const [accountId, setAccountId] = useState(''); // TODO remove default;
+  const [accountId, setAccountId] = useState('');
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -18,8 +18,7 @@ export default function Transactions() {
         setAccountIds(response);
         setAccountId(response[0]);
       } catch(e) {
-        // TODO handle error in UI here
-        console.error(e);
+        _handleError(e);
       }
     };
     fetchData();
@@ -32,8 +31,7 @@ export default function Transactions() {
         const response = await listTransactions(accountId);
         setTransactions(response);
       } catch(e) {
-        // TODO handle error in UI here
-        console.error(e);
+        _handleError(e);
       }
     };
     if (accountId) {
@@ -43,22 +41,29 @@ export default function Transactions() {
 
   return (
     <MainLayout>
-      <div className="transactions__transfer-button">
-        <Link to="/transfer">
-          <Button>Make a Transfer</Button>
-        </Link>
+      <div className="transactions">
+        <div className="transactions__transfer-button">
+          <Link to="/transfer">
+            <Button>Make a Transfer</Button>
+          </Link>
+        </div>
+        <div className="transactions__account-select">
+          <label htmlFor="accountId">View Account</label>
+          <select id="accountId" value={accountId} onChange={(e) => setAccountId(e.target.value)}>
+            {
+              accountIds.map(id => (
+                <option key={id} value={id}>{id}</option>
+              ))
+            }
+          </select>
+        </div>
+        <TransactionList transactions={transactions} />
       </div>
-      <div className="transactions__account-select">
-        { /* consider using react-select here because it looks nicer */ }
-        <select value={accountId} onChange={(e) => setAccountId(e.target.value)}>
-          {
-            accountIds.map(id => (
-              <option key={id} value={id}>Account: {id}</option>
-            ))
-          }
-        </select>
-      </div>
-      <TransactionList transactions={transactions} />
     </MainLayout>
   );
+}
+
+function _handleError(e) {
+  // TODO handle error in UI here
+  console.error(e);
 }
