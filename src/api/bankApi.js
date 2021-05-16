@@ -95,6 +95,16 @@ export const listAccounts = async () => {
   }
 };
 
+export const listCurrencies = async () => {
+  try {
+    // TODO replace with fetch to hit real backend when ready
+    return Promise.resolve(['HKD', 'NZD']);
+  } catch(e) {
+    return _handleException(e);
+  }
+};
+  // TODO get this from backend API
+
 function _handleException(e) {
   // TODO extend error handling here e.g. use a logger
   return Promise.reject(e);

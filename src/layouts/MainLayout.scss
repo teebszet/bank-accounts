@@ -6,7 +6,6 @@
     justify-content: center;
     background-color: $primary-color;
     color: $primary-color-text;
-    margin-bottom: 2rem;
     height: 4.5rem;
 
     h1 {
@@ -18,5 +17,9 @@
       padding: 0.5rem;
       text-transform: uppercase;
     }
+  }
+  &__content {
+    min-height: calc(100vh - 4.5rem);
+    padding-top: 2rem;
   }
 }
