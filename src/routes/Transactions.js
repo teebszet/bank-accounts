@@ -48,13 +48,16 @@ export default function Transactions() {
           <Button>Make a Transfer</Button>
         </Link>
       </div>
-      <select value={accountId} onChange={(e) => setAccountId(e.target.value)}>
-        {
-          accountIds.map(id => (
-            <option key={id} value={id}>{id}</option>
-          ))
-        }
-      </select>
+      <div className="transactions__account-select">
+        { /* consider using react-select here because it looks nicer */ }
+        <select value={accountId} onChange={(e) => setAccountId(e.target.value)}>
+          {
+            accountIds.map(id => (
+              <option key={id} value={id}>Account: {id}</option>
+            ))
+          }
+        </select>
+      </div>
       <TransactionList transactions={transactions} />
     </MainLayout>
   );
