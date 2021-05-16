@@ -4,7 +4,6 @@
 A UI that access a backend API to manage bank accounts
 
 ## getting started
-
 1. install dependencies:
 `npm install`
 2. in a terminal, run test suite:
@@ -15,3 +14,6 @@ A UI that access a backend API to manage bank accounts
 ## dependencies
 node 14.16
 npm 7.3
+
+## technical debt
+* create a favicon and store it in public/ along with config in manifest.json and edit index.html. see https://realfavicongenerator.net/
