@@ -12,6 +12,7 @@ describe('transfer route', () => {
   });
 
   it('should report amount field is required when submitting an empty field', () => {
+    cy.get('select#toAccount').select('02002');
     cy.get('.transfer-button button').click();
     cy.get('.amount input').should('have.focus');
     cy.get('.amount input').siblings('.error').should('be.visible');
@@ -45,6 +46,7 @@ describe('transfer route', () => {
       });
       expect(req.url).to.match(/\/02001\/transfer$/);
     });
+    cy.get('select#toAccount').select('02002');
     cy.get('.amount input').type(87);
     cy.get('.transfer-button button').click();
     cy.wait('@postTransfer');

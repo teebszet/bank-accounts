@@ -110,7 +110,7 @@ export const listCurrencies = async () => {
 
 export const postTransfer = async ({toAccount, fromAccount, amount, currency}) => {
   try {
-    //TODO remove this after real api is done
+    // TODO remove this after real api is done
     // simulating the backend
     transactions[toAccount].push({
       amount: Number(amount),
@@ -128,6 +128,7 @@ export const postTransfer = async ({toAccount, fromAccount, amount, currency}) =
       description: `Transfer to ${toAccount}`,
     });
     //
+
     return fetch(`/${fromAccount}/transfer`, {
       method: 'POST',
       headers: {

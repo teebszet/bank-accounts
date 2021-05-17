@@ -11,20 +11,30 @@ export default function Transfer() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+    setValue,
+  } = useForm({
+    defaultValues: {
+      fromAccount: undefined,
+      toAccount: undefined,
+      currency: 'HKD',
+      amount: undefined
+    }
+  });
 
   const [accounts, setAccounts] = useState([]);
   const [currencies, setCurrencies] = useState([]);
   const watchFromAccount = watch('fromAccount');
   const onSubmit = async (data) => {
-    // console.log(data);
     await postTransfer(data);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setAccounts(await listAccounts());
+        const response = await listAccounts();
+        setAccounts(response);
+        setValue('fromAccount', response[0]);
+        setValue('toAccount', '');
       } catch (e) {
         _handleFetchError(e);
       }
@@ -35,7 +45,9 @@ export default function Transfer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setCurrencies(await listCurrencies());
+        const response = await listCurrencies();
+        setCurrencies(response);
+        setValue('currency', response[0]);
       } catch (e) {
         _handleFetchError(e);
       }
@@ -50,17 +62,26 @@ export default function Transfer() {
         <form className="transfer__form" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="fromAccount">From Account</label>
-            <select id="fromAccount" {...register('fromAccount')}>
+            <select
+              id="fromAccount"
+              {...register('fromAccount', {
+                required: 'From Account is required',
+              })}
+            >
               {accounts.map((account, i) => (
                 <option key={i} value={account}>
                   {account}
                 </option>
               ))}
             </select>
+            <span className="error">{errors?.fromAccount?.message}</span>
           </div>
           <div>
             <label htmlFor="toAccount">To Account</label>
-            <select id="toAccount" {...register('toAccount')}>
+            <select
+              id="toAccount"
+              {...register('toAccount', { required: 'To Account is required' })}
+            >
               {accounts
                 .filter((a) => a !== watchFromAccount)
                 .map((account, i) => (
@@ -69,26 +90,27 @@ export default function Transfer() {
                   </option>
                 ))}
             </select>
-            <span>{errors.toAccount}</span>
+            <span className="error">{errors?.toAccount?.message}</span>
           </div>
           <div className="currency-amount-row">
-            <select className="currency" {...register('currency')}>
-              {currencies.map((currency, i) => (
-                <option key={i} value={currency}>
-                  {currency}
-                </option>
-              ))}
-            </select>
+            <div>
+              <select
+                className="currency"
+                {...register('currency', { required: 'Currency is required' })}
+              >
+                {currencies.map((currency, i) => (
+                  <option key={i} value={currency}>
+                    {currency}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="amount">
               <input
                 type="number"
-                {...register('amount', { required: true })}
+                {...register('amount', { required: 'Amount is required' })}
               ></input>
-              {errors.amount ? (
-                <span className="error">Amount is required</span>
-              ) : (
-                ''
-              )}
+              <span className="error">{errors?.amount?.message}</span>
             </div>
           </div>
           <div className="transfer-button">
