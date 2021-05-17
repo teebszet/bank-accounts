@@ -110,6 +110,7 @@ export const listCurrencies = async () => {
 
 export const postTransfer = async ({toAccount, fromAccount, amount, currency}) => {
   try {
+    //TODO remove this after real api is done
     // simulating the backend
     transactions[toAccount].push({
       amount: Number(amount),
@@ -126,7 +127,18 @@ export const postTransfer = async ({toAccount, fromAccount, amount, currency}) =
       timestamp: new Date().toString(),
       description: `Transfer to ${toAccount}`,
     });
-    return Promise.resolve();
+    //
+    return fetch(`/${fromAccount}/transfer`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        toAccount,
+        amount: Number(amount),
+        currency,
+      })
+    });
   } catch(e) {
     return _handleException(e);
   }
@@ -134,5 +146,6 @@ export const postTransfer = async ({toAccount, fromAccount, amount, currency}) =
 
 function _handleException(e) {
   // TODO extend error handling here e.g. use a logger
+  console.error(e);
   return Promise.reject(e);
 }
