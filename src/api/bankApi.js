@@ -45,36 +45,36 @@ export const CREDIT = 'CREDIT';
 const transactions = {
   '02001': [
     {
-      "timestamp": "2021-05-16T04:55:17.890Z",
-      "action": DEBIT,
-      "description": "Direct Credit S T Macandrew",
-      "amount": 343.00,
-      "currency": "HKD"
+      timestamp: '2021-05-16T04:55:17.890Z',
+      action: DEBIT,
+      description: 'Direct Credit S T Macandrew',
+      amount: 343.0,
+      currency: 'HKD',
     },
     {
-      "timestamp": "2021-05-12T04:55:17.890Z",
-      "action": DEBIT,
-      "description": "QTWN COOKIE BAR QUEENSTOWN POS",
-      "amount": 33.09,
-      "currency": "NZD"
-    }
+      timestamp: '2021-05-12T04:55:17.890Z',
+      action: DEBIT,
+      description: 'QTWN COOKIE BAR QUEENSTOWN POS',
+      amount: 33.09,
+      currency: 'NZD',
+    },
   ],
   '02002': [
     {
-      "timestamp": "2021-05-16T04:55:17.890Z",
-      "action": CREDIT,
-      "description": "Direct Credit S T Macandrew 0XX01",
-      "amount": 343.00,
-      "currency": "HKD"
+      timestamp: '2021-05-16T04:55:17.890Z',
+      action: CREDIT,
+      description: 'Direct Credit S T Macandrew 0XX01',
+      amount: 343.0,
+      currency: 'HKD',
     },
     {
-      "timestamp": "2021-05-12T04:55:17.890Z",
-      "action": DEBIT,
-      "description": "POS W/D MRS FERG MRS 9:20",
-      "amount": 16.09,
-      "currency": "NZD"
-    }
-  ]
+      timestamp: '2021-05-12T04:55:17.890Z',
+      action: DEBIT,
+      description: 'POS W/D MRS FERG MRS 9:20',
+      amount: 16.09,
+      currency: 'NZD',
+    },
+  ],
 };
 
 /* TODO replace these implementations with fetch to hit real backend when ready */
@@ -87,7 +87,7 @@ export const listTransactions = async (accountId) => {
       throw new Error('account id not found');
     }
     return Promise.resolve(transactions[accountId]);
-  } catch(e) {
+  } catch (e) {
     return _handleException(e);
   }
 };
@@ -95,7 +95,7 @@ export const listTransactions = async (accountId) => {
 export const listAccounts = async () => {
   try {
     return Promise.resolve(Object.keys(transactions));
-  } catch(e) {
+  } catch (e) {
     return _handleException(e);
   }
 };
@@ -103,12 +103,17 @@ export const listAccounts = async () => {
 export const listCurrencies = async () => {
   try {
     return Promise.resolve(['HKD', 'NZD']);
-  } catch(e) {
+  } catch (e) {
     return _handleException(e);
   }
 };
 
-export const postTransfer = async ({toAccount, fromAccount, amount, currency}) => {
+export const postTransfer = async ({
+  toAccount,
+  fromAccount,
+  amount,
+  currency,
+}) => {
   try {
     // TODO remove this after real api is done
     // simulating the backend
@@ -132,21 +137,21 @@ export const postTransfer = async ({toAccount, fromAccount, amount, currency}) =
     return fetch(`/${fromAccount}/transfer`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
         toAccount,
         amount: Number(amount),
         currency,
-      })
+      }),
     });
-  } catch(e) {
+  } catch (e) {
     return _handleException(e);
   }
 };
 
 function _handleException(e) {
   // TODO extend error handling here e.g. use a logger
-  console.error(e);
+  // console.error(e);
   return Promise.reject(e);
 }
