@@ -8,4 +8,12 @@
   font-weight: bolder;
   letter-spacing: 0.1rem;
   border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:visited,
+  &:active {
+    opacity: 0.8;
+  }
 }
